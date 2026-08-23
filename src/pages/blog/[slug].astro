@@ -5,19 +5,23 @@ import { formatPostDate, postSlug } from '../../lib/posts';
 import { slugifyTag } from '../../lib/tags';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts
+  const posts = (await getCollection('blog'))
     .filter((post) => !post.data.draft)
-    .map((post) => {
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+  return posts
+    .map((post, index) => {
+      const previousPost = posts[index + 1];
+      const nextPost = posts[index - 1];
       const slug = postSlug(post);
       return {
         params: { slug },
-        props: { post, slug },
+        props: { post, slug, previousPost, nextPost },
       };
     });
 }
 
-const { post, slug } = Astro.props;
+const { post, slug, previousPost, nextPost } = Astro.props;
 const { Content, headings } = await render(post);
 const sectionHeadings = headings.filter((heading) => heading.depth === 2);
 // Tags whose slug is empty have no archive page; skip their chips.
@@ -75,6 +79,26 @@ const postSchema = JSON.stringify({
         <div class="article-prose">
           <Content />
         </div>
+        <nav class="article-nav" aria-label="Post navigation">
+          {previousPost ? (
+            <a class="article-nav-link article-nav-previous" href={`/blog/${postSlug(previousPost)}/`}>
+              <span class="article-nav-label">Previous</span>
+              <strong>{previousPost.data.title}</strong>
+            </a>
+          ) : <span />}
+          {nextPost ? (
+            <a class="article-nav-link article-nav-next" href={`/blog/${postSlug(nextPost)}/`}>
+              <span class="article-nav-label">Next</span>
+              <strong>{nextPost.data.title}</strong>
+            </a>
+          ) : <span />}
+        </nav>
+        <button class="article-like" type="button" data-like-slug={slug} aria-pressed="false">
+          <svg viewBox="0 0 26 26" aria-hidden="true">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
+          </svg>
+          <span>Like</span>
+        </button>
         <section class="article-comments" aria-label="Comments">
           <div id="remark42"></div>
         </section>
@@ -186,6 +210,27 @@ const postSchema = JSON.stringify({
     function init() {
       initToc();
       initComments();
+      initLike();
+    }
+
+    function initLike() {
+      const button = document.querySelector<HTMLButtonElement>('[data-like-slug]');
+      if (!button) return;
+      const slug = button.dataset.likeSlug;
+      if (!slug) return;
+      const key = `liked-post:${slug}`;
+      const sync = () => {
+        const liked = localStorage.getItem(key) === '1';
+        button.setAttribute('aria-pressed', String(liked));
+        button.classList.toggle('is-liked', liked);
+      };
+      sync();
+      button.onclick = () => {
+        const liked = localStorage.getItem(key) === '1';
+        if (liked) localStorage.removeItem(key);
+        else localStorage.setItem(key, '1');
+        sync();
+      };
     }
 
     init();

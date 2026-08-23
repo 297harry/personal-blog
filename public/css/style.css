@@ -1132,6 +1132,84 @@ button.nav-icon-link {
     border-top: 1px solid var(--line);
 }
 
+.article-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+}
+
+.article-nav-link {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.85rem 1rem;
+    color: var(--ink);
+    transition: border-color 120ms ease, background 120ms ease;
+}
+
+.article-nav-link:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.article-nav-next {
+    text-align: right;
+}
+
+.article-nav-label {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+}
+
+.article-nav-link strong {
+    overflow: hidden;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.article-like {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 5.5rem;
+    margin: 1.5rem auto 0;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--muted);
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+    transition: transform 120ms ease, border-color 120ms ease, background 120ms ease, color 120ms ease;
+}
+
+.article-like svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: transparent;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.article-like svg:hover{
+    color: var(--red);
+    transform: scale(1.18);
+}
+
+.article-like.is-liked svg {
+    color: var(--red);
+    transform: scale(1.18);
+    transition: transform 160ms ease;
+}
+
 
 /* ===== Init (about) page ===== */
 
