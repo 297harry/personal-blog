@@ -82,16 +82,16 @@ const currentPath = Astro.url.pathname;
           <div class="nav-menu-panel">
             <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>Home</a>
             <a href="/blog/" aria-current={currentPath.startsWith('/blog') ? 'page' : undefined}>Blog</a>
-            <a href="/links/" aria-current={currentPath === '/links/' ? 'page' : undefined}>Links</a>
             <a href="/about/" aria-current={currentPath === '/about/' ? 'page' : undefined}>About</a>
+            <a href="/links/" aria-current={currentPath === '/links/' ? 'page' : undefined}>🔗</a>
           </div>
         </details>
 
         <div class="nav-links">
           <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>Home</a>
           <a href="/blog/" aria-current={currentPath.startsWith('/blog') ? 'page' : undefined}>Blog</a>
-          <a href="/links/" aria-current={currentPath === '/links/' ? 'page' : undefined}>Links</a>
           <a href="/about/" aria-current={currentPath === '/about/' ? 'page' : undefined}>About</a>
+          <a href="/links/" aria-current={currentPath === '/links/' ? 'page' : undefined}>🔗</a>
         </div>
 
         <div class="nav-tools">
