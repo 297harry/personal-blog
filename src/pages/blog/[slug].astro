@@ -247,8 +247,42 @@ const postSchema = JSON.stringify({
           }, 1400);
         });
 
-        topbar.append(languageLabel, copyButton);
+        const actions = document.createElement('div');
+        actions.className = 'code-block-actions';
+
+        const collapseButton = document.createElement('button');
+        collapseButton.className = 'code-block-collapse';
+        collapseButton.type = 'button';
+        pre.classList.add('is-collapsed');
+        collapseButton.setAttribute('aria-expanded', 'false');
+        collapseButton.setAttribute('aria-label', 'Expand code');
+        collapseButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg><span>Expand</span>';
+        collapseButton.addEventListener('click', () => {
+          const collapsed = pre.classList.toggle('is-collapsed');
+          collapseButton.setAttribute('aria-expanded', String(!collapsed));
+          collapseButton.setAttribute('aria-label', collapsed ? 'Expand code' : 'Collapse code');
+          const label = collapseButton.querySelector('span');
+          if (label) label.textContent = collapsed ? 'Expand' : 'Collapse';
+        });
+
+        const expandHint = document.createElement('button');
+        expandHint.className = 'code-block-expand-hint';
+        expandHint.type = 'button';
+        expandHint.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6" /></svg><span class="visually-hidden">Click to expand</span>';
+        expandHint.setAttribute('aria-label', 'Expand code');
+        expandHint.addEventListener('click', () => collapseButton.click());
+
+        actions.append(copyButton, collapseButton);
+        topbar.append(languageLabel, actions);
         pre.prepend(topbar);
+        pre.append(expandHint);
+        if (code.scrollHeight > code.clientHeight) {
+          pre.classList.add('is-collapsible');
+        } else {
+          pre.classList.remove('is-collapsed');
+          collapseButton.setAttribute('aria-expanded', 'true');
+          collapseButton.setAttribute('aria-label', 'Collapse code');
+        }
         pre.dataset.enhanced = 'true';
       });
     }
