@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+import { postSlug } from '../../lib/posts';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const galleryItems = posts.flatMap((post) => {
+  const body = post.body ?? '';
+  const images = [...body.matchAll(/!\[([^\]]*)\]\(([^)]+)\)/g)];
+
+  return images.map(([, alt, source]) => {
+    const path = source?.trim() ?? '';
+    const src = path.startsWith('http')
+      ? path
+      : path.replace(/^.*?\/public(?=\/)/, '').replace(/^\.\//, '/');
+    return { alt: alt?.trim() || post.data.title, src, post };
+  });
+});
+---
+
+<Layout
+  title="Gallery — Your Name"
+  description="Images from the blog."
+  canonicalPath="/gallery/"
+>
+  <main class="content-shell">
+    <section class="page-hero">
+      <h1>Gallery</h1>
+      <p class="hero-lede">Images from the blog.</p>
+    </section>
+
+    <section class="section" aria-label="Blog images">
+      {galleryItems.length === 0 ? (
+        <p class="empty-note">No images yet.</p>
+      ) : (
+        <div class="gallery-grid">
+          {galleryItems.map((item) => (
+            <figure class="gallery-item">
+              <a href={`/blog/${postSlug(item.post)}/`} aria-label={`View ${item.post.data.title}`}>
+                <img src={item.src} alt={item.alt} loading="lazy" />
+              </a>
+              <figcaption>
+                <span>{item.alt}</span>
+                <a href={`/blog/${postSlug(item.post)}/`}>{item.post.data.title}</a>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+    </section>
+  </main>
+</Layout>
