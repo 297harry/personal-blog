@@ -211,6 +211,46 @@ const postSchema = JSON.stringify({
       initToc();
       initComments();
       initLike();
+      initCodeBlocks();
+    }
+
+    function initCodeBlocks() {
+      document.querySelectorAll<HTMLPreElement>('.article-prose pre').forEach((pre) => {
+        if (pre.dataset.enhanced === 'true') return;
+        const code = pre.querySelector('code');
+        if (!code) return;
+
+        const language = pre.dataset.language || code.className.match(/language-([\w-]+)/)?.[1] || 'text';
+        const topbar = document.createElement('div');
+        topbar.className = 'code-block-topbar';
+        topbar.setAttribute('data-pagefind-ignore', '');
+
+        const languageLabel = document.createElement('span');
+        languageLabel.className = 'code-block-language';
+        languageLabel.textContent = language;
+
+        const copyButton = document.createElement('button');
+        copyButton.className = 'code-block-copy';
+        copyButton.type = 'button';
+        copyButton.setAttribute('aria-label', 'Copy code');
+        copyButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg><span>Copy</span>';
+        copyButton.addEventListener('click', async () => {
+          await navigator.clipboard.writeText(code.textContent ?? '');
+          copyButton.classList.add('is-copied');
+          copyButton.setAttribute('aria-label', 'Code copied');
+          const label = copyButton.querySelector('span');
+          if (label) label.textContent = 'Copied';
+          window.setTimeout(() => {
+            copyButton.classList.remove('is-copied');
+            copyButton.setAttribute('aria-label', 'Copy code');
+            if (label) label.textContent = 'Copy';
+          }, 1400);
+        });
+
+        topbar.append(languageLabel, copyButton);
+        pre.prepend(topbar);
+        pre.dataset.enhanced = 'true';
+      });
     }
 
     function initLike() {
