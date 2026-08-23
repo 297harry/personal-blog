@@ -1,0 +1,30 @@
+---
+import Layout from '../components/Layout.astro';
+---
+
+<Layout
+    title="Links — Your Name"
+    description="A collection of my favorite sites and blogs."
+    canonicalPath="/links/"
+>
+    <main class="content-shell" data-pagefind-body>
+        <div class="page-hero">
+            <h1>Links</h1>
+            <p class="hero-lede">A collection of my favorite sites and blogs.</p>
+        </div>
+
+        <section class="section" aria-label="Friend links">
+            <div id="friend-circle-lite-root"></div>
+        </section>
+    </main>
+
+    <script is:inline>
+        window.UserConfig = window.UserConfig || {
+            private_api_url: 'https://data-bee-fc-lite.netlify.app/',
+            page_turning_number: 20,
+            error_img: 'https://i.p-i.vip/30/20240815-66bced9226a36.webp',
+        };
+    </script>
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/willow-god/Friend-Circle-Lite/main/fclite.min.css" />
+    <script src="https://fastly.jsdelivr.net/gh/willow-god/Friend-Circle-Lite/main/fclite.min.js"></script>
+</Layout>
