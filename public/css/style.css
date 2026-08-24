@@ -1408,6 +1408,10 @@ button.nav-icon-link {
     transform: scale(1.18);
 }
 
+.article-like-count {
+    font-variant-numeric: tabular-nums;
+}
+
 .article-like.is-liked svg {
     color: var(--red);
     transform: scale(1.18);

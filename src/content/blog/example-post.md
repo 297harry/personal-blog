@@ -6,6 +6,7 @@ tags:
   - Astro
   - Markdown
 draft: false
+id: "post-efse1"
 ---
 
 This is an example post. Every post is a markdown file in `src/content/blog/` with four frontmatter fields: `title`, `description`, `date`, and an optional `draft` flag. Set `draft: true` to keep a post out of the build while you work on it.
