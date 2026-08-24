@@ -17,6 +17,7 @@ const {
 
 const site = 'https://example.com';
 const canonicalUrl = new URL(canonicalPath, site).toString();
+const googleAnalyticsId = import.meta.env.PUBLIC_GA_ID;
 // Replace public/assets/og.png with your own 1200x630 social preview image.
 const ogImageUrl = new URL('/assets/og.png', site).toString();
 const currentPath = Astro.url.pathname;
@@ -50,6 +51,17 @@ const currentPath = Astro.url.pathname;
     <meta name="twitter:image" content={ogImageUrl} />
 
     <link rel="preload" href="/assets/jbm.woff2" as="font" type="font/woff2" crossorigin />
+    {googleAnalyticsId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
+        <script is:inline define:vars={{ googleAnalyticsId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() {{ window.dataLayer.push(arguments); }}
+          gtag('js', new Date());
+          gtag('config', googleAnalyticsId);
+        </script>
+      </>
+    )}
     <script is:inline>
       (() => {
         const apply = () => {
