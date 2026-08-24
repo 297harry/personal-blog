@@ -93,11 +93,11 @@ const postSchema = JSON.stringify({
             </a>
           ) : <span />}
         </nav>
-        <button class="article-like" type="button" data-like-slug={slug} aria-pressed="false">
+        <button class="article-like" type="button" data-like-id={post.data.id} aria-pressed="false" aria-label="Like this post">
           <svg viewBox="0 0 26 26" aria-hidden="true">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" />
           </svg>
-          <span>Like</span>
+          <span class="article-like-count" data-like-count>Like</span>
         </button>
         <section class="article-comments" aria-label="Comments">
           <div id="remark42"></div>
@@ -288,22 +288,49 @@ const postSchema = JSON.stringify({
     }
 
     function initLike() {
-      const button = document.querySelector<HTMLButtonElement>('[data-like-slug]');
-      if (!button) return;
-      const slug = button.dataset.likeSlug;
-      if (!slug) return;
-      const key = `liked-post:${slug}`;
-      const sync = () => {
-        const liked = localStorage.getItem(key) === '1';
-        button.setAttribute('aria-pressed', String(liked));
-        button.classList.toggle('is-liked', liked);
-      };
-      sync();
-      button.onclick = () => {
-        const liked = localStorage.getItem(key) === '1';
-        if (liked) localStorage.removeItem(key);
-        else localStorage.setItem(key, '1');
-        sync();
+      const button = document.querySelector<HTMLButtonElement>('[data-like-id]');
+      const countEl = button?.querySelector<HTMLSpanElement>('[data-like-count]');
+      const postId = button?.dataset.likeId;
+      const apiBase = import.meta.env.PUBLIC_LIKE_API_URL;
+      if (!button || !countEl || !postId || !apiBase) return;
+
+      const likedKey = `liked-post:${postId}`;
+      let liked = localStorage.getItem(likedKey) === '1';
+      let pending = false;
+
+      function render(count: number) {
+        countEl!.textContent = String(count);
+        button!.setAttribute('aria-pressed', String(liked));
+        button!.classList.toggle('is-liked', liked);
+      }
+
+      fetch(`${apiBase}/posts/${encodeURIComponent(postId)}/likes`)
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data: { likes?: number } | null) => {
+          if (typeof data?.likes === 'number') render(data.likes);
+        })
+        .catch(() => {});
+
+      button.onclick = async () => {
+        if (pending) return;
+        pending = true;
+        button.disabled = true;
+        const action = liked ? 'unlike' : 'like';
+        try {
+          const res = await fetch(`${apiBase}/posts/${encodeURIComponent(postId)}/${action}`, { method: 'POST' });
+          if (res.ok) {
+            const data: { likes: number } = await res.json();
+            liked = !liked;
+            if (liked) localStorage.setItem(likedKey, '1');
+            else localStorage.removeItem(likedKey);
+            render(data.likes);
+          }
+        } catch {
+          // Network error or rate limit: leave the count and liked state untouched.
+        } finally {
+          pending = false;
+          button.disabled = false;
+        }
       };
     }
 
