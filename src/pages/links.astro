@@ -1,5 +1,6 @@
 ---
 import Layout from '../components/Layout.astro';
+import FriendGrid from '../components/FriendGrid.astro';
 ---
 
 <Layout
@@ -12,6 +13,10 @@ import Layout from '../components/Layout.astro';
             <h1>Links</h1>
             <p class="hero-lede">A collection of my favorite sites and blogs.</p>
         </div>
+
+        <section class="section" aria-label="Friends">
+            <FriendGrid />
+        </section>
 
         <section class="section" aria-label="Friend links">
             <div id="friend-circle-lite-root"></div>
