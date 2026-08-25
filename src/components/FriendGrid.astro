@@ -1,0 +1,86 @@
+---
+// friend.json rows: [title, link, friendsPageLink, avatar, description, lang].
+// friendsPageLink (reciprocal link back to this site) isn't shown here.
+type FriendRow = [string, string, string, string, string, string];
+
+interface Friend {
+  title: string;
+  link: string;
+  avatar: string;
+  description: string;
+  lang: string;
+}
+
+// Statically imported so Vite bundles the data at build time; a runtime fs
+// read would resolve relative to the built chunk, not the project root.
+import friendData from '../../public/friend.json';
+const raw = friendData as { friends: FriendRow[] };
+
+const friends: Friend[] = raw.friends.map(([title, link, , avatar, description, lang]) => ({
+  title,
+  link,
+  avatar,
+  description,
+  lang,
+}));
+
+// Tabs are derived from whatever lang codes appear in friend.json, not hardcoded.
+// 'en' comes first so it's the default active tab.
+const langs = [...new Set(friends.map((friend) => friend.lang))].sort((a, b) =>
+  a === 'en' ? -1 : b === 'en' ? 1 : a.localeCompare(b),
+);
+const langLabel = (lang: string) => (lang === 'cn' ? '中文' : lang === 'en' ? 'English' : lang);
+---
+
+<div class="friend-grid-wrap" data-friend-grid>
+  <div class="friend-tabs" role="tablist" aria-label="Filter friends by language">
+    {langs.map((lang, index) => (
+      <button type="button" class={`friend-tab${index === 0 ? ' is-active' : ''}`} data-friend-tab={lang} role="tab" aria-selected={index === 0 ? 'true' : 'false'}>{langLabel(lang)}</button>
+    ))}
+  </div>
+  <div class="friend-grid">
+    {friends.map((friend) => (
+      <a class="friend-card" href={friend.link} target="_blank" rel="noopener noreferrer" data-friend-lang={friend.lang} hidden={friend.lang !== langs[0]}>
+        <span class="friend-avatar-wrap">
+          <img class="friend-avatar" src={friend.avatar} alt="" loading="lazy" width="56" height="56" />
+          <span class="friend-avatar-overlay" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14" />
+              <path d="m13 6 6 6-6 6" />
+            </svg>
+          </span>
+        </span>
+        <div class="friend-card-body">
+          <h3>{friend.title}</h3>
+          <p>{friend.description}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
+
+<script>
+  function initFriendGrid() {
+    const root = document.querySelector<HTMLElement>('[data-friend-grid]');
+    if (!root) return;
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-friend-tab]'));
+    const cards = Array.from(root.querySelectorAll<HTMLAnchorElement>('.friend-card'));
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const lang = tab.dataset.friendTab;
+        tabs.forEach((t) => {
+          const active = t === tab;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-selected', String(active));
+        });
+        cards.forEach((card) => {
+          card.hidden = card.dataset.friendLang !== lang;
+        });
+      });
+    });
+  }
+
+  initFriendGrid();
+  document.addEventListener('astro:page-load', initFriendGrid);
+</script>

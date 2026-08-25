@@ -4,13 +4,18 @@
 			"极限风味",
 			"https://ex-tasty.com",
 			"https://ex-tasty.com/friends/",
-			"https://ex-tasty.com/favicon.ico"
+			"https://ex-tasty.com/favicon.ico",
+			" description description description description description description description description",
+			"cn"
 		],
 		[
 			"Axi",
 			"https://axi404.top/",
 			"https://axi404.top/en/links",
-			"https://axi404.top/avatar/avatar.png"
+			"https://axi404.top/avatar/avatar.png",
+			"一只可爱小猫",
+			"en"
 		]
 	]
+	
 }

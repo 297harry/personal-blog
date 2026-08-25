@@ -964,6 +964,139 @@ button.nav-icon-link {
     padding: 0.22rem 0.75rem;
 }
 
+/* ===== Friend grid ===== */
+
+.friend-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0 0 1.4rem;
+}
+
+.friend-tab {
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.22rem 0.75rem;
+    cursor: pointer;
+    transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.friend-tab:hover {
+    color: var(--accent);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
+    background: var(--accent-soft);
+}
+
+.friend-tab.is-active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.friend-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+}
+
+.friend-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color 120ms ease, transform 120ms ease;
+}   
+
+.friend-avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.friend-avatar {
+    display: block;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--accent-soft);
+    transition: transform 120ms ease;
+}
+
+.friend-avatar-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: color-mix(in srgb, var(--ink) 45%, transparent);
+    opacity: 0;
+    transition: opacity 120ms ease;
+}
+
+.friend-avatar-overlay svg {
+    width: 1.7rem;
+    height: 1.7rem;
+}
+
+
+.friend-card:hover .friend-avatar {
+    transform: scale(1.08);
+}
+
+.friend-card:hover .friend-avatar-overlay {
+    opacity: 1;
+}
+
+.friend-card-body {
+    /* Lets the title/description ellipsis instead of overflowing the flex row. */
+    min-width: 0;
+    margin: 0.1rem 0 0;
+    padding: 0;
+}
+
+.friend-card-body h3 {
+    margin: 0;
+    overflow: hidden;
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: color 120ms ease;
+}
+
+.friend-card:hover .friend-card-body h3 {
+    color: var(--accent);
+}
+
+.friend-card-body p {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 0.2rem 0 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.friend-card[hidden] {
+    display: none;
+}
+
+
 .inline-link {
     color: var(--accent);
     font-family: var(--mono);
