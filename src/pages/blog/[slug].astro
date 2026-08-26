@@ -291,7 +291,7 @@ const postSchema = JSON.stringify({
       const button = document.querySelector<HTMLButtonElement>('[data-like-id]');
       const countEl = button?.querySelector<HTMLSpanElement>('[data-like-count]');
       const postId = button?.dataset.likeId;
-      const apiBase = import.meta.env.PUBLIC_LIKE_API_URL;
+      const apiBase = window.location.origin;
       if (!button || !countEl || !postId || !apiBase) return;
 
       const likedKey = `liked-post:${postId}`;
@@ -311,7 +311,7 @@ const postSchema = JSON.stringify({
         button!.classList.toggle('is-liked', liked);
       }
 
-      fetch(`${apiBase}/posts/${encodeURIComponent(postId)}/likes`)
+      fetch(`${apiBase}/api/posts/${encodeURIComponent(postId)}/likes`)
         .then((res) => (res.ok ? res.json() : null))
         .then((data: { likes?: number } | null) => {
           if (typeof data?.likes === 'number') render(data.likes);
@@ -324,7 +324,7 @@ const postSchema = JSON.stringify({
         button.disabled = true;
         const action = liked ? 'unlike' : 'like';
         try {
-          const res = await fetch(`${apiBase}/posts/${encodeURIComponent(postId)}/${action}`, { method: 'POST' });
+          const res = await fetch(`${apiBase}/api/posts/${encodeURIComponent(postId)}/${action}`, { method: 'POST' });
           if (res.ok) {
             const data: { likes: number } = await res.json();
             liked = !liked;
