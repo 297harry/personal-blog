@@ -100,7 +100,7 @@ const postSchema = JSON.stringify({
           <span class="article-like-count" data-like-count>Like</span>
         </button>
         <section class="article-comments" aria-label="Comments">
-          <div id="remark42"></div>
+          <div id="remark42">Comments loading...</div>
         </section>
       </article>
     </div>
@@ -178,7 +178,7 @@ const postSchema = JSON.stringify({
 
       w.remark_config = {
         host: REMARK_HOST,
-        site_id: 'example',
+        site_id: 'remark42',
         url: window.location.origin + window.location.pathname,
         theme: paletteTheme(),
         show_email_subscription: false,
