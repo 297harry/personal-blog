@@ -108,6 +108,7 @@ const postSchema = JSON.stringify({
 
   <script>
     const REMARK_HOST = import.meta.env.PUBLIC_REMARK_HOST;
+    const REMARK_SITE_HOST = import.meta.env.PUBLIC_REMARK_SITE_HOST;
 
     type Remark42 = {
       createInstance: (config: Record<string, unknown>) => { destroy: () => void };
@@ -174,7 +175,7 @@ const postSchema = JSON.stringify({
         return;
       }
       // The comments service only exists on the public origin.
-      if (window.location.hostname !== 'example.com') return;
+      if (window.location.hostname !== REMARK_SITE_HOST) return;
 
       w.remark_config = {
         host: REMARK_HOST,
