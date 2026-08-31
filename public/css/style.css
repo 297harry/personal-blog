@@ -265,7 +265,7 @@ code, pre, kbd, samp {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1rem;
+    gap: 0.45rem;
 }
 
 .brand {
@@ -312,7 +312,7 @@ code, pre, kbd, samp {
 }
 
 .nav-menu-button {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -375,7 +375,6 @@ code, pre, kbd, samp {
 
 .nav-tools {
     display: flex;
-    align-items: center;
     gap: 0.45rem;
 }
 
@@ -453,6 +452,75 @@ code, pre, kbd, samp {
     height: 1.5rem;
 }
 
+.theme-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(1px);
+}
+
+.theme-overlay[hidden] { display: none; }
+
+.theme-overlay-panel {
+    width: 80vw;
+    max-height:50vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 2px solid var(--accent);
+    border-radius: 2px;
+    background: var(--term-bg);
+    font-family: var(--mono);
+    color: var(--term-text);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+}
+
+.theme-overlay-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 1rem;
+    border-top: 1px solid var(--term-border);
+    color: var(--term-muted);
+    font-size: 0.72rem;
+    font-weight: 400;
+}
+
+.theme-overlay-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: auto;
+}
+
+.theme-overlay-footer .key {
+    color: var(--term-muted);
+    font-weight: 700;
+}
+
+.theme-close-btn {
+    border: 0;
+    border-radius: 1px;
+    background: var(--term-active-bg);
+    color: var(--term-muted);
+    padding: 0.15rem 0.5rem;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.theme-close-btn:hover,
+.theme-close-btn:focus-visible {
+    outline: none;
+    color: var(--term-text);
+    background: var(--term-border);
+}
 
 /* ===== Search overlay ===== */
 
@@ -1147,8 +1215,8 @@ button.nav-icon-link {
 .article-layout {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(8rem, 12rem) minmax(0, 860px);
-    gap: clamp(2rem, 6vw, 4rem);
+    grid-template-columns: minmax(0, 860px) minmax(8rem, 12rem) ;
+    gap: clamp(4rem, 8vw, 8rem);
     align-items: start;
     padding-top: 4rem;
     /* Sits directly under the sticky header's border — avoid a double line. */
@@ -1214,6 +1282,7 @@ button.nav-icon-link {
 }
 
 .article-header {
+    margin-top:1rem;
     margin-bottom: 2.35rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--line);
@@ -1263,6 +1332,7 @@ button.nav-icon-link {
 
 .article-prose h2 {
     margin: 2.2rem 0 0.75rem;
+    scroll-margin-top: 7rem;
     font-size: clamp(1.55rem, 3vw, 2.2rem);
 }
 
@@ -1750,7 +1820,7 @@ button.nav-icon-link {
 
 @media (max-width: 860px) {
     .nav-links { display: none; }
-    .nav-menu { display: block; }
+    .nav-menu { display: flex; }
 
     .about-grid {
         display: block;
@@ -1797,22 +1867,17 @@ button.nav-icon-link {
     .skills-marquee {
         margin-top: 3rem;
     }
+    .nav-menu{
+        left:auto;
+        flex-basis: 100%;
+        justify-content: flex-end;
+    }
 
     .nav-tools {
         gap: 0.35rem;
     }
 
-    /* The brand + hamburger + icon row don't all fit on one line below
-       ~370px (iPhone SE and similar) — wrap the icon row onto its own
-       line instead of letting it overflow the viewport. Harmless on
-       wider phones where everything already fits on one row. */
-    .nav {
-        flex-wrap: wrap;
-        row-gap: 0.5rem;
-    }
-
     .nav-tools {
-        flex-basis: 100%;
         justify-content: flex-end;
     }
 }
