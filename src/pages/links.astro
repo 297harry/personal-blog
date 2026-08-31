@@ -1,6 +1,7 @@
 ---
 import Layout from '../components/Layout.astro';
 import FriendGrid from '../components/FriendGrid.astro';
+import FriendLanguageSwitch from '../components/FriendLanguageSwitch.astro';
 import Remark42 from '../components/Remark42.astro';
 
 const friendCircleApiUrl = import.meta.env.PUBLIC_FRIEND_CIRCLE_API_URL;
@@ -15,6 +16,7 @@ const friendCircleApiUrl = import.meta.env.PUBLIC_FRIEND_CIRCLE_API_URL;
         <div class="page-hero">
             <h1>Links</h1>
             <p class="hero-lede">A collection of my favorite sites and blogs.</p>
+            <FriendLanguageSwitch />
         </div>
 
         <section class="section" aria-label="Friends">
