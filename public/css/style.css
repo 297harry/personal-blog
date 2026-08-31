@@ -1282,6 +1282,7 @@ button.nav-icon-link {
 }
 
 .article-header {
+    margin-top:1rem;
     margin-bottom: 2.35rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--line);
