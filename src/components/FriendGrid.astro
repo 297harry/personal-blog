@@ -30,6 +30,7 @@ const langs = [...new Set(friends.map((friend) => friend.lang))].sort((a, b) =>
 ---
 
 <div class="friend-grid-wrap" data-friend-grid>
+  Authors:
   <div class="friend-grid">
     {friends.map((friend) => (
       <a class="friend-card" href={friend.link} target="_blank" rel="noopener noreferrer" data-friend-lang={friend.lang} hidden={friend.lang !== langs[0]}>
