@@ -38,7 +38,7 @@ const friendCircleAssetBaseUrl = friendCircleApiUrl?.replace(/\/$/, '');
             error_img: 'https://i.p-i.vip/30/20240815-66bced9226a36.webp',
         };
     </script>
-    <link rel="stylesheet" href="https://databee.aretexoxo.com/css/style.css"/>
+    <link rel="stylesheet" href={`${friendCircleAssetBaseUrl}/main/fclite.css`} />
     <script is:inline define:vars={{ friendCircleAssetBaseUrl }}>
         const friendCircleScript = document.createElement('script');
         friendCircleScript.src = `${friendCircleAssetBaseUrl}/main/fclite.js`;
