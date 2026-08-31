@@ -24,20 +24,15 @@ const friends: Friend[] = raw.friends.map(([title, link, , avatar, description, 
   lang,
 }));
 
-// Tabs are derived from whatever lang codes appear in friend.json, not hardcoded.
-// 'en' comes first so it's the default active tab.
 const langs = [...new Set(friends.map((friend) => friend.lang))].sort((a, b) =>
   a === 'en' ? -1 : b === 'en' ? 1 : a.localeCompare(b),
 );
-const langLabel = (lang: string) => (lang === 'cn' ? '中文' : lang === 'en' ? 'English' : lang);
 ---
 
 <div class="friend-grid-wrap" data-friend-grid>
-  <div class="friend-tabs" role="tablist" aria-label="Filter friends by language">
-    {langs.map((lang, index) => (
-      <button type="button" class={`friend-tab${index === 0 ? ' is-active' : ''}`} data-friend-tab={lang} role="tab" aria-selected={index === 0 ? 'true' : 'false'}>{langLabel(lang)}</button>
-    ))}
-  </div>
+  Authors:
+  <br>
+  <br>
   <div class="friend-grid">
     {friends.map((friend) => (
       <a class="friend-card" href={friend.link} target="_blank" rel="noopener noreferrer" data-friend-lang={friend.lang} hidden={friend.lang !== langs[0]}>
@@ -60,25 +55,20 @@ const langLabel = (lang: string) => (lang === 'cn' ? '中文' : lang === 'en' ? 
 </div>
 
 <script>
+  let friendGridController: AbortController | undefined;
+
   function initFriendGrid() {
+    friendGridController?.abort();
+    friendGridController = new AbortController();
     const root = document.querySelector<HTMLElement>('[data-friend-grid]');
     if (!root) return;
-    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-friend-tab]'));
     const cards = Array.from(root.querySelectorAll<HTMLAnchorElement>('.friend-card'));
 
-    tabs.forEach((tab) => {
-      tab.addEventListener('click', () => {
-        const lang = tab.dataset.friendTab;
-        tabs.forEach((t) => {
-          const active = t === tab;
-          t.classList.toggle('is-active', active);
-          t.setAttribute('aria-selected', String(active));
-        });
-        cards.forEach((card) => {
-          card.hidden = card.dataset.friendLang !== lang;
-        });
+    document.addEventListener('friend-language-change', ((event: CustomEvent<{ lang: string }>) => {
+      cards.forEach((card) => {
+        card.hidden = card.dataset.friendLang !== event.detail.lang;
       });
-    });
+    }) as EventListener, { signal: friendGridController.signal });
   }
 
   initFriendGrid();

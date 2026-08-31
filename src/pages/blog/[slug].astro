@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../components/Layout.astro';
+import Remark42 from '../../components/Remark42.astro';
 import { formatPostDate, postSlug } from '../../lib/posts';
 import { slugifyTag } from '../../lib/tags';
 
@@ -99,30 +100,13 @@ const postSchema = JSON.stringify({
           </svg>
           <span class="article-like-count" data-like-count>Like</span>
         </button>
-        <section class="article-comments" aria-label="Comments">
-          <div id="remark42"></div>
-        </section>
+        <Remark42 />
       </article>
     </div>
   </main>
 
   <script>
-    // Optional Remark42 comments. Point these at your own instance, or
-    // remove the #remark42 section above to disable comments entirely.
-    const REMARK_HOST = 'https://comments.example.com';
-
-    type Remark42 = {
-      createInstance: (config: Record<string, unknown>) => { destroy: () => void };
-      changeTheme: (theme: 'light' | 'dark') => void;
-    };
-    const w = window as typeof window & {
-      remark_config?: Record<string, unknown>;
-      REMARK42?: Remark42;
-    };
-
     let tocObserver: IntersectionObserver | undefined;
-    let commentsInstance: { destroy: () => void } | undefined;
-    let embedRequested = false;
 
     function initToc() {
       tocObserver?.disconnect();
@@ -153,63 +137,8 @@ const postSchema = JSON.stringify({
       for (const heading of headings) tocObserver.observe(heading);
     }
 
-    // Map the active palette to Remark42's light/dark themes by the
-    // luminance of --bg, so all palettes work without a hard-coded list.
-    function paletteTheme(): 'light' | 'dark' {
-      const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
-      const hex = bg.replace('#', '');
-      const full = hex.length === 3 ? [...hex].map((c) => c + c).join('') : hex;
-      const luma =
-        0.2126 * parseInt(full.slice(0, 2), 16) +
-        0.7152 * parseInt(full.slice(2, 4), 16) +
-        0.0722 * parseInt(full.slice(4, 6), 16);
-      return luma > 128 ? 'light' : 'dark';
-    }
-
-    function initComments() {
-      const node = document.getElementById('remark42');
-      if (!node) {
-        try {
-          commentsInstance?.destroy();
-        } catch {}
-        commentsInstance = undefined;
-        return;
-      }
-      // The comments service only exists on the public origin.
-      if (window.location.hostname !== 'example.com') return;
-
-      w.remark_config = {
-        host: REMARK_HOST,
-        site_id: 'example',
-        url: window.location.origin + window.location.pathname,
-        theme: paletteTheme(),
-        show_email_subscription: false,
-      };
-
-      if (w.REMARK42) {
-        try {
-          commentsInstance?.destroy();
-        } catch {}
-        commentsInstance = w.REMARK42.createInstance(w.remark_config);
-      } else if (!embedRequested) {
-        // embed.mjs self-initializes against #remark42 using remark_config.
-        embedRequested = true;
-        const script = document.createElement('script');
-        script.src = `${REMARK_HOST}/web/embed.mjs`;
-        script.type = 'module';
-        document.head.append(script);
-      }
-    }
-
-    // <html> survives view transitions, so one observer follows palette
-    // switches for the life of the session.
-    new MutationObserver(() => {
-      w.REMARK42?.changeTheme(paletteTheme());
-    }).observe(document.documentElement, { attributeFilter: ['data-palette'] });
-
     function init() {
       initToc();
-      initComments();
       initLike();
       initCodeBlocks();
     }

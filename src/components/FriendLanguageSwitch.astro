@@ -1,0 +1,38 @@
+---
+const languages = [
+  { value: 'en', label: 'English' },
+  { value: 'cn', label: '中文' },
+];
+---
+
+<div class="friend-tabs" role="tablist" aria-label="Filter friends by language">
+  {languages.map((language, index) => (
+    <button type="button" class={`friend-tab${index === 0 ? ' is-active' : ''}`} data-friend-language={language.value} role="tab" aria-selected={index === 0 ? 'true' : 'false'}>{language.label}</button>
+  ))}
+</div>
+
+<script>
+  let languageSwitchController: AbortController | undefined;
+
+  function initFriendLanguageSwitch() {
+    languageSwitchController?.abort();
+    languageSwitchController = new AbortController();
+    const { signal } = languageSwitchController;
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-friend-language]'));
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const lang = tab.dataset.friendLanguage;
+        if (!lang) return;
+        tabs.forEach((candidate) => {
+          const active = candidate === tab;
+          candidate.classList.toggle('is-active', active);
+          candidate.setAttribute('aria-selected', String(active));
+        });
+        document.dispatchEvent(new CustomEvent('friend-language-change', { detail: { lang } }));
+      }, { signal });
+    });
+  }
+
+  initFriendLanguageSwitch();
+  document.addEventListener('astro:page-load', initFriendLanguageSwitch);
+</script>

@@ -1,6 +1,10 @@
 ---
 import Layout from '../components/Layout.astro';
 import FriendGrid from '../components/FriendGrid.astro';
+import FriendLanguageSwitch from '../components/FriendLanguageSwitch.astro';
+import Remark42 from '../components/Remark42.astro';
+
+const friendCircleApiUrl = import.meta.env.PUBLIC_FRIEND_CIRCLE_API_URL;
 ---
 
 <Layout
@@ -12,24 +16,29 @@ import FriendGrid from '../components/FriendGrid.astro';
         <div class="page-hero">
             <h1>Links</h1>
             <p class="hero-lede">A collection of my favorite sites and blogs.</p>
+            <FriendLanguageSwitch />
         </div>
+
+        <section class="section" aria-label="Friend links">
+            <div id="friend-circle-lite-root"></div>
+        </section>
 
         <section class="section" aria-label="Friends">
             <FriendGrid />
         </section>
 
-        <section class="section" aria-label="Friend links">
-            <div id="friend-circle-lite-root"></div>
-        </section>
+        <div class="section">
+            <Remark42 />
+        </div>
     </main>
 
-    <script is:inline>
+    <script define:vars={{ friendCircleApiUrl }}>
         window.UserConfig = window.UserConfig || {
-            private_api_url: 'https://data-bee-fc-lite.netlify.app/',
+            private_api_url: friendCircleApiUrl,
             page_turning_number: 20,
             error_img: 'https://i.p-i.vip/30/20240815-66bced9226a36.webp',
         };
     </script>
-    <link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/willow-god/Friend-Circle-Lite/main/fclite.min.css" />
-    <script src="https://fastly.jsdelivr.net/gh/willow-god/Friend-Circle-Lite/main/fclite.min.js"></script>
+    <link rel="stylesheet" href="https://fclite-databee.aretexoxo.com/main/fclite.css"/>
+    <script src = "https://fclite-databee.aretexoxo.com/main/fclite.js"></script>
 </Layout>

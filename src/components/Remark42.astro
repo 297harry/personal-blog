@@ -1,0 +1,69 @@
+<section class="article-comments" aria-label="Comments">
+  <div id="remark42">Comments loading...</div>
+</section>
+
+<script>
+  const REMARK_HOST = import.meta.env.PUBLIC_REMARK_HOST;
+
+  type Remark42 = {
+    createInstance: (config: Record<string, unknown>) => { destroy: () => void };
+    changeTheme: (theme: 'light' | 'dark') => void;
+  };
+  const w = window as typeof window & {
+    remark_config?: Record<string, unknown>;
+    REMARK42?: Remark42;
+  };
+
+  let commentsInstance: { destroy: () => void } | undefined;
+  let embedRequested = false;
+
+  function paletteTheme(): 'light' | 'dark' {
+    const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+    const hex = bg.replace('#', '');
+    const full = hex.length === 3 ? [...hex].map((character) => character + character).join('') : hex;
+    const luma =
+      0.2126 * parseInt(full.slice(0, 2), 16) +
+      0.7152 * parseInt(full.slice(2, 4), 16) +
+      0.0722 * parseInt(full.slice(4, 6), 16);
+    return luma > 128 ? 'light' : 'dark';
+  }
+
+  function initComments() {
+    const node = document.getElementById('remark42');
+    if (!node) {
+      try {
+        commentsInstance?.destroy();
+      } catch {}
+      commentsInstance = undefined;
+      return;
+    }
+
+    w.remark_config = {
+      host: REMARK_HOST,
+      site_id: 'databee',
+      url: window.location.origin + window.location.pathname,
+      theme: paletteTheme(),
+      show_email_subscription: false,
+    };
+
+    if (w.REMARK42) {
+      try {
+        commentsInstance?.destroy();
+      } catch {}
+      commentsInstance = w.REMARK42.createInstance(w.remark_config);
+    } else if (!embedRequested) {
+      embedRequested = true;
+      const script = document.createElement('script');
+      script.src = `${REMARK_HOST}/web/embed.mjs`;
+      script.type = 'module';
+      document.head.append(script);
+    }
+  }
+
+  new MutationObserver(() => {
+    w.REMARK42?.changeTheme(paletteTheme());
+  }).observe(document.documentElement, { attributeFilter: ['data-palette'] });
+
+  initComments();
+  document.addEventListener('astro:page-load', initComments);
+</script>
