@@ -92,14 +92,14 @@ const postSchema = JSON.stringify({
         </button>
         <Remark42 />
       </article>
-            <aside class="article-toc" aria-label="Article sections">
-        {sectionHeadings.length > 0 && (
-          <nav>
-            {sectionHeadings.map((heading) => (
-              <a href={`#${heading.slug}`} data-heading-link={heading.slug}>{heading.text}</a>
-            ))}
-          </nav>
-        )}
+      <aside class="article-toc" aria-label="Article sections">
+      {sectionHeadings.length > 0 && (
+        <nav>
+          {sectionHeadings.map((heading) => (
+            <a href={`#${heading.slug}`} data-heading-link={heading.slug}>{heading.text}</a>
+          ))}
+        </nav>
+      )}
       </aside>
     </div>
   </main>
