@@ -970,7 +970,7 @@ button.nav-icon-link {
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
-    margin: 1 0 1.4rem;
+    margin: 1rem 0 1.4rem;
 }
 
 .friend-tab {
