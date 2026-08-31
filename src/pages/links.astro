@@ -4,7 +4,6 @@ import FriendGrid from '../components/FriendGrid.astro';
 import Remark42 from '../components/Remark42.astro';
 
 const friendCircleApiUrl = import.meta.env.PUBLIC_FRIEND_CIRCLE_API_URL;
-const friendCircleAssetBaseUrl = friendCircleApiUrl?.replace(/\/$/, '');
 ---
 
 <Layout
@@ -38,6 +37,6 @@ const friendCircleAssetBaseUrl = friendCircleApiUrl?.replace(/\/$/, '');
             error_img: 'https://i.p-i.vip/30/20240815-66bced9226a36.webp',
         };
     </script>
-    <link rel="stylesheet" href={`${friendCircleAssetBaseUrl}/main/fclite.css`} />
+    <link rel="stylesheet" href="https://fclite-databee.aretexoxo.com/main/fclite.css"/>
     <script src = "https://fclite-databee.aretexoxo.com/main/fclite.js"></script>
 </Layout>
