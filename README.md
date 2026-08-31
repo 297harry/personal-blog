@@ -55,7 +55,17 @@ The theme ships with placeholder values. Search the project for `example.com`, `
 - `public/robots.txt` and `public/.well-known/security.txt`: domain and contact
 - `public/assets/og.png`: social preview image, 1200x630 (a plain placeholder is included)
 
-Comments stay disabled unless you run a Remark42 instance. The configuration is at the bottom of `src/pages/blog/[slug].astro`; remove the comments section there if you don't want it.
+## Environment variables
+
+Configure these variables in `.env` for local development or in your deployment provider's environment settings:
+
+| Variable | Purpose | Required |
+| --- | --- | --- |
+| `PUBLIC_REMARK_HOST` | Base URL of your [Remark42](https://remark42.com) instance, such as `https://comments.example.com` | To enable comments |
+| `PUBLIC_FRIEND_CIRCLE_API_URL` | Base URL serving Friend Circle Lite data, such as `https://friends.example.com/` | To display the Friend Circle feed |
+| `PUBLIC_GA_ID` | Google Analytics measurement ID | No |
+
+
 
 ## Writing posts
 
