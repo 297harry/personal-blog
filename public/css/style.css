@@ -756,7 +756,7 @@ button.nav-icon-link {
     color: var(--ink);
     font-family: var(--mono);
     font-weight: 400;
-    font-size: clamp(2.8rem, 7vw, 6rem);
+    font-size: 2rem;
     line-height: 0.92;
     letter-spacing: -0.07em;
 }
