@@ -37,15 +37,15 @@ const postSchema = JSON.stringify({
   url: new URL(`/blog/${slug}/`, Astro.site).toString(),
   author: {
     '@type': 'Person',
-    name: 'Your Name',
-    url: 'https://example.com/about/',
+    name: 'Arete',
+    url: 'https://databee.aretexoxo.com/about/',
   },
   // Escape < so a post title/description can never close the <script> tag.
 }).replace(/</g, '\\u003c');
 ---
 
 <Layout
-  title={`${post.data.title} — Your Name`}
+  title={`${post.data.title} — Data Bee`}
   description={post.data.description}
   canonicalPath={`/blog/${slug}/`}
   ogType="article"

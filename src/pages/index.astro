@@ -13,9 +13,9 @@ const posts = (await getCollection('blog'))
 const personSchema = JSON.stringify({
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: 'Your Name',
+  name: 'Arete',
   jobTitle: 'Your Job Title',
-  url: 'https://example.com',
+  url: 'https://databee.aretexoxo.com',
   sameAs: [
     'https://github.com/your-username',
     'https://linkedin.com/in/your-profile',
@@ -25,8 +25,8 @@ const personSchema = JSON.stringify({
 ---
 
 <Layout
-  title="Palette — Your Name"
-  description="A short tagline describing you and what you write about."
+  title="Data Bee"
+  description="Data buzzes like bees. Bees produce honey, as data produces insights."
   canonicalPath="/"
 >
   <script type="application/ld+json" is:inline set:html={personSchema} />

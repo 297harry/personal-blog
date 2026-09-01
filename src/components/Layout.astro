@@ -15,7 +15,7 @@ const {
   ogType = 'website',
 } = Astro.props;
 
-const site = 'https://example.com';
+const site = 'https://databee.aretexoxo.com';
 const canonicalUrl = new URL(canonicalPath, site).toString();
 const googleAnalyticsId = import.meta.env.PUBLIC_GA_ID;
 // Replace public/assets/og.png with your own 1200x630 social preview image.
@@ -33,11 +33,11 @@ const currentPath = Astro.url.pathname;
     <meta name="theme-color" content="#f0eee9" />
     <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate" type="application/rss+xml" title="Palette" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Data Bee" href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <meta property="og:type" content={ogType} />
-    <meta property="og:site_name" content="Palette" />
+    <meta property="og:site_name" content="Data Bee" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
@@ -81,8 +81,8 @@ const currentPath = Astro.url.pathname;
   <body>
     <header class="site-header">
       <nav class="nav" aria-label="Primary navigation">
-        <a class="brand" href="/" aria-label="Palette Home">
-          <span>Palette</span>
+        <a class="brand" href="/" aria-label="Data Bee Home">
+          <span>Data Bee</span>
         </a>
 
         <details class="nav-menu">
@@ -129,7 +129,7 @@ const currentPath = Astro.url.pathname;
     <slot />
 
     <footer class="footer">
-      <span>&copy; {new Date().getFullYear()} example.com</span>
+      <span>&copy; 2026 Data Bee</span>
     </footer>
 
     <div class="theme-hint" id="theme-hint">

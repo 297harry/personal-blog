@@ -9,9 +9,9 @@ export async function GET(context: APIContext) {
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
   return rss({
-    title: 'Palette — Your Name',
+    title: 'Data Bee',
     description:
-      'A short description of what you write about.',
+      'Data buzzes like bees. Bees produce honey, as data produces insights.',
     site: context.site!,
     items: posts.map((post) => ({
       title: post.data.title,
