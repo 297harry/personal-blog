@@ -16,11 +16,6 @@ const posts = (await getCollection('blog'))
   canonicalPath="/blog/"
 >
   <main class="content-shell">
-    <section class="page-hero">
-      <h1 class="visually-hidden">Blog</h1>
-      <TypedLede text="Data buzzes like bees. Bees produce honey, as data produces insights." />
-    </section>
-
     <section class="section" aria-label="Blog posts">
       {posts.length === 0 ? (
         <p style="color: var(--muted); font-family: var(--mono);">No posts yet, check back soon.</p>
@@ -30,7 +25,5 @@ const posts = (await getCollection('blog'))
         </div>
       )}
     </section>
-
-    <SkillsMarquee />
   </main>
 </Layout>
