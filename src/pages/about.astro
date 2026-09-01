@@ -10,11 +10,6 @@ import SkillsMarquee from '../components/SkillsMarquee.astro';
   canonicalPath="/about/"
 >
   <main class="content-shell" data-pagefind-body>
-    <div class="page-hero">
-      <h1 class="visually-hidden">About</h1>
-      <TypedLede text="Data buzzes like bees. Bees produce honey, as data produces insights." />
-    </div>
-
     <div class="section" style="max-width: var(--max);">
       <div class="about-grid">
         <div class="about-me">
@@ -55,21 +50,22 @@ import SkillsMarquee from '../components/SkillsMarquee.astro';
 
         <aside>
           <div class="sidebar-card">
-            <h3>Education</h3>
-            <div class="edu-entry">
-              <p class="edu-degree">Degree, Field of Study</p>
-              <p class="edu-school"><a href="https://example.edu" target="_blank" rel="noopener" style="color: var(--accent);">University Name</a> · Year</p>
+            <h3>Badge Wall</h3>
+            <div class="badge-entry">
+              <p class="badge-name"><a href="https://learn.microsoft.com/en-us/credentials/certifications/developing-ai-enabled-database-solutions/?practice-assessment-type=certification" target="_blank" rel="noopener" style="color: var(--accent);">SQL AI Developer Associate</a></p>
+              <p class="badge-issuer"><span style="color: var(--ink)">Microsoft</span> · 2026</p>
             </div>
-            <div class="edu-entry">
-              <p class="edu-degree">Degree, Field of Study</p>
-              <p class="edu-school"><a href="https://example.edu" target="_blank" rel="noopener" style="color: var(--accent);">University Name</a> · Year</p>
+            <div class="badge-entry">
+              <p class="badge-name"><a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-data-fundamentals/?practice-assessment-type=certification" target="_blank" rel="noopener" style="color: var(--accent);">Azure Data Fundamentals</a></p>
+              <p class="badge-issuer"><span style="color: var(--ink)">Microsoft</span> · 2025</p>
             </div>
-
+            <div class="badge-entry">
+              <p class="badge-name"><a href="https://learn.microsoft.com/en-us/credentials/certifications/azure-fundamentals/?practice-assessment-type=certification" target="_blank" rel="noopener" style="color: var(--accent);">Azure Fundamentals</a></p>
+              <p class="badge-issuer"><span style="color: var(--ink)">Microsoft</span> · 2024</p>
+            </div>
           </div>
         </aside>
       </div>
     </div>
-
-    <SkillsMarquee />
   </main>
 </Layout>
