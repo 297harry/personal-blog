@@ -4,12 +4,12 @@ import type { CollectionEntry } from 'astro:content';
 // in the /tags/ archive, so marquee items link somewhere even before any
 // post uses them as a tag.
 export const skills = [
-  'HTML', 'CSS', 'JavaScript', 'TypeScript',
-  'Python', 'Go', 'Rust', 'Bash',
-  'Git', 'GitHub Actions', 'Docker', 'Kubernetes',
-  'AWS', 'Azure', 'GCP',
-  'PostgreSQL', 'Redis', 'GraphQL', 'REST APIs',
-  'Linux', 'Terraform', 'Ansible', 'CI/CD',
+  'HTML', 'CSS', 'JavaScript', 'TypeScript','React',
+  'Python', 'Bash',
+  'Git', 'GitHub Actions', 'Docker', 
+  'Azure', 'Cloudflare','Tencent', 
+  'SQL SERVER', 'PostgreSQL', 'MongoDB', 'GraphQL', 'REST APIs',
+  'CI/CD',
 ];
 
 // URL slug for a tag. Letters and digits in any script are kept (lowercased),
