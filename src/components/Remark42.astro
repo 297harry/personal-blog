@@ -44,6 +44,16 @@
       url: window.location.origin + window.location.pathname,
       theme: paletteTheme(),
       show_email_subscription: false,
+      __colors__: paletteTheme() === 'dark' ? {
+          '--primary-color': '243, 174, 174',
+          '--primary-brighter-color': '241, 158, 156',
+          '--color47': 'rgba(243,156,156,0.4)',
+      }:
+      {
+          '--primary-color': '243,158,158',
+          '--primary-brighter-color': '243, 170, 170',
+          '--color47': 'rgba(243,156,156,0.4)',
+      }
     };
 
     if (w.REMARK42) {
@@ -67,4 +77,3 @@
   initComments();
   document.addEventListener('astro:page-load', initComments);
 </script>
-<link rel="stylesheet" href="https://databee.aretexoxo.com/css/style.css">
