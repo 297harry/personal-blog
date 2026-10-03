@@ -1354,6 +1354,31 @@ button.nav-icon-link {
 
 .article-prose li + li { margin-top: 0.42rem; }
 
+.article-prose table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    margin: 1.2rem 0;
+}
+
+.article-prose th,
+.article-prose td {
+    border: 0;
+    border-bottom: 1px solid var(--line-strong);
+    padding: 0.55rem 0.75rem;
+    text-align: left;
+}
+
+.article-prose th {
+    border-bottom: 2px solid var(--ink-soft);
+    font-weight: 700;
+}
+
+.article-prose tbody tr:last-child td {
+    border-bottom: 0;
+}
+
 .article-prose blockquote {
     margin: 1.2rem 0;
     border-left: 2px solid color-mix(in srgb, var(--accent) 72%, var(--line));
