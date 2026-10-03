@@ -105,6 +105,6 @@ On AI:
 1. Reference to official document and forum is always a must. They are more reliable than AI. Sometimes I cannot find out the solution with AI, but searching the web will help.
 2. I am a little bit shamed by writing this post with AI. My writing is more personal than What AI does, but I think the present version is more acceptable by readers. I should try to write for public. On this aspect, AI wins.
 
-<img src="../../../public/assets/Azure_subscription_cost_202609.png" alt="crazy bill"/>
+<img src="/assets/Azure_subscription_cost_202609.png" alt="crazy bill"/>
 
 _Mainly for hosting Remark42 on Azure for one month.🥲_
